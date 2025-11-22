@@ -3,7 +3,7 @@ import axios from "axios";
 
 function Test() {
   const [users, setUsers] = useState([]);
-  const [filtered, setFiltered] = useState([]);
+  const [filtered, setFiltered]=useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
@@ -11,7 +11,7 @@ function Test() {
   const [selectedUser, setSelectedUser] = useState(null);
 
   
-  useEffect(() => {
+useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
@@ -21,7 +21,6 @@ function Test() {
           email: u.email,
           city: u.address.city,
         }));
-
         setUsers(transformed);
         setFiltered(transformed);
       })
@@ -29,12 +28,11 @@ function Test() {
       .finally(() => setLoading(false));
   }, []);
 
-  
   useEffect(() => {
     let temp = users;
 
     if (search.trim() !== "") {
-      temp = temp.filter((u) =>
+      temp=temp.filter((u) =>
         u.name.toLowerCase().includes(search.toLowerCase())
       );
     }
@@ -57,6 +55,7 @@ function Test() {
 
     
       <div className="flex gap-4 mb-4">
+        
         <input
           type="text"
           placeholder="Search by name"
@@ -71,9 +70,8 @@ function Test() {
           value={city}
           onChange={(e) => setCity(e.target.value)}
           className="border p-2 rounded w-1/2"
-        />
+        />   
       </div>
-
       
       <table className="w-full border-collapse border border-gray-400">
         <thead className="bg-gray-200">
@@ -87,8 +85,7 @@ function Test() {
 
         <tbody>
           {filtered.map((u) => (
-            <tr
-              key={u.id}
+            <tr key={u.id}
               onClick={() => setSelectedUser(u)}
               className="cursor-pointer hover:bg-gray-100"
             >
@@ -102,11 +99,11 @@ function Test() {
       </table>
 
     
-      {selectedUser && (
-        <div className="mt-6 p-4 border rounded shadow">
-          <h3 className="text-xl font-semibold mb-2">User Details</h3>
+{selectedUser && (
+  <div className="mt-6 p-4 border rounded shadow">
+      <h3 className="text-xl font-semibold mb-2">User Details</h3>
           <p><strong>ID:</strong> {selectedUser.id}</p>
-          <p><strong>Name:</strong> {selectedUser.name}</p>
+        <p><strong>Name:</strong> {selectedUser.name}</p>
           <p><strong>Email:</strong> {selectedUser.email}</p>
           <p><strong>City:</strong> {selectedUser.city}</p>
 
@@ -121,4 +118,5 @@ function Test() {
     </div>
   );
 }
+
  export default Test();
